@@ -3,13 +3,17 @@ const express = require('express');
 // const bodyParser = require('body-parser');
 const serverCongif = require('./config/serverConfig');
 const connectDB = require('./config/dbConfig');
+const userRouter = require('./routes/userRoute'); 
+const cartRouter = require('./routes/cartRoute');
 
 const app = express();
 app.use(express.json()); // Middleware to parse JSON bodies
 app.use(express.text()); // Middleware to parse text bodies
 app.use(express.urlencoded({ extended: true })); // Middleware to parse URL-encoded bodies
 
-const PORT = process.env.PORT || 3000;
+//routing middleware
+app.use('/users', userRouter);
+app.use('/carts', cartRouter);  
 
 app.listen(serverCongif.PORT, async () => {
     await connectDB();
