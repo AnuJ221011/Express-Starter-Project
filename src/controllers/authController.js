@@ -7,10 +7,16 @@ async function login(req, res) {
 
         const response = await loginUser(loginPayload);
 
+        res.cookie('authToken', response, {
+            httpOnly: true,
+            secure: false,
+            maxAge: 7*24*60*60*1000 // 7 days
+        })
+
         return res.status(200).json({
             message: "User logged in successfully",
             success: true,
-            data: response,
+            data: {},
             error: {}
         })
     } catch (error) {
